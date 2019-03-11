@@ -1,0 +1,3 @@
+---
+fail2ban::package_list:
+  - python-pyinotify

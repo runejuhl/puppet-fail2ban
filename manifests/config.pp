@@ -1,6 +1,8 @@
 # == Class: fail2ban::config
 #
-class fail2ban::config {
+class fail2ban::config (
+  Hash $custom_jails = $::fail2ban::custom_jails,
+) inherits ::fail2ban {
 
   file { 'fail2ban.dir':
     ensure  => $::fail2ban::config_dir_ensure,
@@ -8,7 +10,6 @@ class fail2ban::config {
     force   => $::fail2ban::config_dir_purge,
     purge   => $::fail2ban::config_dir_purge,
     recurse => $::fail2ban::config_dir_recurse,
-    source  => $::fail2ban::config_dir_source,
     notify  => $::fail2ban::config_file_notify,
     require => $::fail2ban::config_file_require,
   }
@@ -28,7 +29,9 @@ class fail2ban::config {
   }
 
   # Custom jails definition
-  create_resources('fail2ban::jail', $::fail2ban::custom_jails)
+  if $custom_jails {
+    create_resources('fail2ban::jail', $custom_jails)
+  }
 
   # Operating system specific configuration
   case $facts['os']['family'] {

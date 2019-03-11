@@ -17,6 +17,7 @@
       "version_requirement": ">= 4.25.0 < 6.0.0"
     }
   ],
+  "data_provider": null,
   "operatingsystem_support": [
     {
       "operatingsystem": "Debian",
